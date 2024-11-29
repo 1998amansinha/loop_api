@@ -30,7 +30,7 @@ const SignInForm = () => {
             Email<span className="text-red-900">*</span>
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             type="email"
             id="email"
             onChange={formik.handleChange}
@@ -46,7 +46,7 @@ const SignInForm = () => {
             Password<span className="text-red-900">*</span>
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             type="password"
             id="password"
             onChange={formik.handleChange}
@@ -57,7 +57,7 @@ const SignInForm = () => {
         <div>
           <button
             type="submit"
-            className="w-full py-3 bg-red-600 text-white text-lg font-medium rounded-lg hover:bg-red-700 transition duration-200"
+            className="w-full py-2 px-3 bg-red-600 text-white text-lg font-medium rounded-lg hover:bg-red-700 transition duration-200"
           >
             Sign in
           </button>
@@ -65,7 +65,7 @@ const SignInForm = () => {
         <div className="">
           <button
             type="button"
-            className="w-full py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-800 transition duration-200 mt-4  "
+            className="w-full py-2 px-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-800 transition duration-200 mt-4  "
           >
             <span className="absolute ">
               <img
@@ -78,7 +78,7 @@ const SignInForm = () => {
           </button>
         </div>
       </form>
-      <div className="mt-10">
+      <div className="mt-10 py-2 px-3">
         <span className="text-gray-700 text-lg">
           Don't have an account?{" "}
           <span

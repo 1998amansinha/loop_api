@@ -31,7 +31,7 @@ const SignUpForm = () => {
             Full Name<span className="text-red-900">*</span>
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             type="text"
             id="name"
             onChange={formik.handleChange}
@@ -44,7 +44,7 @@ const SignUpForm = () => {
             Email<span className="text-red-900">*</span>
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             type="email"
             id="email"
             onChange={formik.handleChange}
@@ -60,7 +60,7 @@ const SignUpForm = () => {
             Password<span className="text-red-900">*</span>
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             type="password"
             id="password"
             onChange={formik.handleChange}
@@ -71,7 +71,7 @@ const SignUpForm = () => {
         <div>
           <button
             type="submit"
-            className="w-full py-3 bg-red-600 text-white text-lg font-medium rounded-lg hover:bg-red-700 transition duration-200 opacity-100"
+            className="w-full py-2 px-3 bg-red-600 text-white text-lg font-medium rounded-lg hover:bg-red-700 transition duration-200 opacity-100"
           >
             Sign up
           </button>
@@ -79,7 +79,7 @@ const SignUpForm = () => {
         <div className="">
           <button
             type="button"
-            className="w-full py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-black transition duration-200 mt-4  opacity-100"
+            className="w-full py-2 px-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-black transition duration-200 mt-4  opacity-100"
           >
             <span className="absolute ">
               <img

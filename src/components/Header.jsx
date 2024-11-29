@@ -15,7 +15,7 @@ const Header = () => {
     location.pathname === "/sign-in" || location.pathname === "/sign-up";
 
   return (
-    <div className="flex justify-between bg-gradient-to-b from-red-400 h-1/5 absolute w-full">
+    <div className="flex justify-between bg-gradient-to-b from-red-400 h-1/2 absolute w-full">
       <div>
         <Logo />
       </div>

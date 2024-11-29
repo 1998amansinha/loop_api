@@ -9,9 +9,7 @@ const Logo = () => {
         src={LOGO_URL}
         alt="LOGO"
       />
-      <h1 className="text-neutral-300 ml-6 mt-24 font-bold text-2xl font">
-        LOOP API
-      </h1>
+      <h1 className="text-white ml-8 mt-24 font-bold text-xl font">LOOP API</h1>
     </div>
   );
 };
