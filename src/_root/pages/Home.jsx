@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
-import SignInForm from "../../_auth/forms/SignInForm";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -12,7 +12,7 @@ const Home = () => {
           alt=""
         />
       </div>
-      <SignInForm />
+      <Outlet />
     </div>
   );
 };

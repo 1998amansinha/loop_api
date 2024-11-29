@@ -1,7 +1,10 @@
 import { useFormik } from "formik";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignInForm = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -11,6 +14,10 @@ const SignInForm = () => {
       console.log(user);
     },
   });
+
+  const handleSignUpClick = () => {
+    navigate("/sign-up");
+  };
 
   return (
     <div className="absolute m-auto left-0 right-0 top-0 -bottom-10 w-1/4 h-[70%]  bg-red-200 p-8 rounded-md shadow-lg opacity-85">
@@ -58,7 +65,7 @@ const SignInForm = () => {
         <div className="">
           <button
             type="button"
-            className="w-full py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-800 transition duration-200 mt-2"
+            className="w-full py-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-800 transition duration-200 mt-4  "
           >
             <span className="absolute ">
               <img
@@ -71,6 +78,17 @@ const SignInForm = () => {
           </button>
         </div>
       </form>
+      <div className="mt-10">
+        <span className="text-gray-700 text-lg">
+          Don't have an account?{" "}
+          <span
+            className="text-red-600 hover:underline cursor-pointer font-semibold"
+            onClick={handleSignUpClick}
+          >
+            Sign up
+          </span>
+        </span>
+      </div>
     </div>
   );
 };
