@@ -4,7 +4,7 @@ import Button from "./shared/Button";
 
 const Header = () => {
   return (
-    <div className="flex justify-between bg-gradient-to-b from-red-400 h-24">
+    <div className="flex justify-between bg-gradient-to-b from-red-400 h-1/5 absolute w-full">
       <div>
         <Logo />
       </div>
