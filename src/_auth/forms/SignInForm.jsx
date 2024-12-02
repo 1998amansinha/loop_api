@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import GitHubLoginButton from "../../components/shared/GitHubLoginButton";
+import SignInSignUpButton from "../../components/shared/SignInSignUpButton";
 
 const SignInForm = () => {
   const navigate = useNavigate();
@@ -54,29 +56,8 @@ const SignInForm = () => {
             placeholder="Enter your password"
           />
         </div>
-        <div>
-          <button
-            type="submit"
-            className="w-full py-2 px-3 bg-red-600 text-white text-lg font-medium rounded-lg hover:bg-red-700 transition duration-200"
-          >
-            Sign in
-          </button>
-        </div>
-        <div className="">
-          <button
-            type="button"
-            className="w-full py-2 px-3 bg-gray-900 text-white text-lg font-medium rounded-lg hover:bg-gray-800 transition duration-200 mt-4  "
-          >
-            <span className="absolute ">
-              <img
-                className="w-8 "
-                src="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png"
-                alt=""
-              />
-            </span>
-            <span className="ml-10">Sign in with Github</span>
-          </button>
-        </div>
+        <SignInSignUpButton title="in" />
+        <GitHubLoginButton title="in" />
       </form>
       <div className="mt-10 py-2 px-3">
         <span className="text-gray-700 text-lg">
