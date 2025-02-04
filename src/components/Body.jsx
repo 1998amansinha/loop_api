@@ -1,8 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router";
-import Navbar from "./Navbar";
-import Hero from "./Hero";
-import Feature from "./Feature";
+import Navbar from "../landing/Navbar";
+import Hero from "../landing/Hero";
+import Feature from "../landing/Feature";
+// import FeatureList from "../landing/FeatureList";
+import ListCard from "../landing/ListCard";
 
 const Body = () => {
   return (
@@ -11,6 +13,7 @@ const Body = () => {
       <Outlet />
       <Hero />
       <Feature />
+      <ListCard />
     </div>
   );
 };

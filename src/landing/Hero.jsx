@@ -45,9 +45,9 @@ const Hero = () => {
 
       <div className="hero-content text-neutral-content text-center relative z-10 max-w-4xl">
         <div>
-          <h1 className="text-6xl md:text-7xl font-extrabold text-white transition-opacity duration-1000">
+          <h1 className="text-6xl md:text-7xl font-extrabold text-base-100 transition-opacity duration-1000">
             The Open-Source API Marketplace{" "}
-            <span className="text-gray-600 font-bold">{displayedText}</span>
+            <span className="text-primary font-bold">{displayedText}</span>
             <span className="text-white animate-blink">|</span>{" "}
             {/* Blinking Cursor */}
           </h1>
