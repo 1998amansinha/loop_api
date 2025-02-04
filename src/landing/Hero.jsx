@@ -57,7 +57,7 @@ const Hero = () => {
             creators and consumers, making API integration effortless.
           </p>
           <Link to="/login">
-            <button className="btn btn-primary  text-white text-lg mt-5 shadow-lg hover:scale-105 transition-transform">
+            <button className="bg-red-500 mt-10 text-base-100 px-14 py-3 rounded-lg font-semibold text-lg hover:bg-red-700 transition-all shadow-md hover:scale-105">
               Get Started
             </button>
           </Link>

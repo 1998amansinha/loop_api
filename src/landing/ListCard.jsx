@@ -3,7 +3,7 @@ import { data } from "../constants/CardList";
 
 const ListCard = () => {
   return (
-    <div className="min-h-screen px-10 pt-10 flex flex-col items-center relative bg-[url('https://res.cloudinary.com/do5xzpecm/image/upload/v1738639613/blob-scene-haikei_1_au9hrq.svg')] bg-cover bg-center">
+    <div className="min-h-screen px-10 pt-10 flex flex-col items-center relative bg-[url('https://res.cloudinary.com/do5xzpecm/image/upload/v1738651995/blob-scene-haikei_3_nt8mow.svg')] bg-cover bg-center">
       {/* Main Layout */}
       <div className="flex flex-col md:flex-row items-start gap-10 md:gap-20 w-full max-w-7xl">
         {/* First Card (Full Height) */}
