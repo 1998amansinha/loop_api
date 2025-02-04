@@ -13,7 +13,7 @@ const Navbar = () => {
               className="btn btn-ghost lg:hidden"
             ></div>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl">
+          <Link to="/" className="btn btn-ghost text-xl ml-10">
             loop Api
           </Link>
         </div>
@@ -30,7 +30,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end mr-10">
           <Link to="/login" className="btn  mr-2">
             Sign in
           </Link>

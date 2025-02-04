@@ -47,17 +47,17 @@ const Hero = () => {
         <div>
           <h1 className="text-6xl md:text-7xl font-extrabold text-base-100 transition-opacity duration-1000">
             The Open-Source API Marketplace{" "}
-            <span className="text-primary font-bold">{displayedText}</span>
+            <span className="text-accent font-bold">{displayedText}</span>
             <span className="text-white animate-blink">|</span>{" "}
             {/* Blinking Cursor */}
           </h1>
-          <p className="mt-6 text-lg md:text-2xl text-gray-300">
+          <p className="mt-6 text-lg md:text-2xl text-base-100">
             Loop API is an open-source platform where developers can publish,
             discover, and use APIs for free. A collaborative space for API
             creators and consumers, making API integration effortless.
           </p>
           <Link to="/login">
-            <button className="bg-red-500 mt-10 text-base-100 px-14 py-3 rounded-lg font-semibold text-lg hover:bg-red-700 transition-all shadow-md hover:scale-105">
+            <button className="bg-neutral mt-10 text-base-100 px-14 py-3 rounded-lg font-semibold text-lg hover:bg-gray-700 transition-all shadow-md hover:scale-105">
               Get Started
             </button>
           </Link>

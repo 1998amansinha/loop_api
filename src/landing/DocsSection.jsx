@@ -23,7 +23,8 @@ const DocsSection = () => {
               integrate seamlessly, optimize performance, and unlock new
               possibilities 🚀
             </strong>{" "}
-            with just a few lines of code.
+            with just <span className="text-base-100"> a few </span> lines of
+            code.
             <br /> <br />
           </p>
         </div>

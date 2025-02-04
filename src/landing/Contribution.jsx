@@ -24,7 +24,7 @@ const Contribution = () => {
         {/* Centered Button */}
         <div className="flex justify-center ">
           <Link to="https://github.com/1998amansinha/loop_api">
-            <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transition-all">
+            <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-blue-700 transition-all text-lg">
               Contribute on GitHub
               <img
                 src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
