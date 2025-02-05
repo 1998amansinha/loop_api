@@ -1,23 +1,26 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Signup from "./components/_auth/forms/Signup";
-import Login from "./components/_auth/forms/Login";
-import AuthLayout from "./components/_auth/AuthLayout";
-import RootLayout from "./components/_root/RootLayout";
-import { Support, About, Home } from "./components/_root/pages/index";
-import Docs from "./components/_docs/Docs";
-import Body from "./components/Body";
+import Navbar from "./landing/Navbar";
+import Body from "./Body";
+import AuthLayout from "./_auth/AuthLayout";
+import RootLayout from "./_root/RootLayout";
+import Login from "./_auth/forms/Login";
+import Signup from "./_auth/forms/Signup";
+import { Home, Support, About } from "./_root/pages/index";
+import Docs from "./_docs/Docs";
 
 const App = () => {
   return (
     <BrowserRouter basename="/">
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Body />} />
+        <Route index path="/" element={<Body />} />
         <Route element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<Signup />} />
         </Route>
         <Route element={<RootLayout />}>
+          <Route path="home" element={<Home />} />
           <Route path="docs" element={<Docs />} />
           <Route path="support" element={<Support />} />
           <Route path="about" element={<About />} />

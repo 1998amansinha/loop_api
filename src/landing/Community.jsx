@@ -15,7 +15,10 @@ const TestimonialsSection = () => {
       </h1>
       <div className="max-w-screen-lg mx-auto flex flex-wrap justify-center gap-8">
         {testimonials.map((testimonial, index) => (
-          <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center max-w-md text-center transform hover:scale-105 transition-all duration-300">
+          <div
+            className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center max-w-md text-center transform hover:scale-105 transition-all duration-300"
+            key={index}
+          >
             <img
               src={testimonial.image}
               alt={testimonial.name}
