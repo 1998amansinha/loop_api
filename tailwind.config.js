@@ -4,7 +4,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        workSans: ["Work Sans", "sans-serif"],
+        apple: ["-apple-system", "sans-serif"],
+        blinkMac: ["BlinkMacSystemFont", "sans-serif"],
+        segoe: ["Segoe UI", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
+        oxygen: ["Oxygen", "sans-serif"],
+        ubuntu: ["Ubuntu", "sans-serif"],
+        cantarell: ["Cantarell", "sans-serif"],
+        openSans: ["Open Sans", "sans-serif"],
+        helvetica: ["Helvetica Neue", "sans-serif"],
         mono: ["Fira Code", "monospace"],
       },
       spacing: {

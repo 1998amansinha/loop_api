@@ -39,7 +39,7 @@ const Hero = () => {
     <div className="hero min-h-screen relative">
       <img
         src="https://res.cloudinary.com/do5xzpecm/image/upload/b_black/e_vignette:100/ph7l3upr5us2dj9ojxpb"
-        className="absolute inset-0 w-full h-full object-cover brightness-125"
+        className="absolute inset-0 w-full h-full object-cover brightness-90 "
         alt="Background"
       />
 
