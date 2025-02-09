@@ -6,7 +6,9 @@ import Input from "../../components/Input";
 import CheckBox from "../../components/CheckBox";
 import { Link } from "react-router";
 import LoginButton from "../../components/LoginButton";
-import { authMethods } from "../../firebase/authMethods";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase/firebaseIndex";
+import { doc, setDoc } from "firebase/firestore";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +16,31 @@ const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  const handleSignup = () => {
-    authMethods.signup();
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      if (user) {
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            firstName,
+            lastName,
+            email,
+            uid: user.uid,
+          });
+        } catch (error) {
+          console.error("Error adding document: ", error);
+        }
+      }
+      console.log(user);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -59,7 +84,7 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <CheckBox />
-        <LoginButton label={"SIGN UP WITH EMAIL"} />
+        <LoginButton type={"submit"} label={"SIGN UP WITH EMAIL"} />
       </form>
       <p className="text-lg text-gray-700 my-5">
         Already have an account?{" "}
