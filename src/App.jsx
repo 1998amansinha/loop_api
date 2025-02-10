@@ -1,5 +1,11 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router";
 import Navbar from "./landing/Navbar";
 import Body from "./Body";
 import AuthLayout from "./_auth/AuthLayout";
@@ -10,11 +16,18 @@ import { Home, Support, About } from "./_root/pages/index";
 import Docs from "./_docs/Docs";
 import { Provider } from "react-redux";
 import appStore from "./utils/store/store";
+import Cookies from "js-cookie";
+import { useAuthListener } from "./firebase/authMethods";
+
+const AuthRedirect = () => {
+  useAuthListener();
+};
 
 const App = () => {
   return (
     <Provider store={appStore}>
       <BrowserRouter basename="/">
+        <AuthRedirect /> {/* 🚀 Redirection Logic Runs Globally */}
         <Navbar />
         <Routes>
           <Route index path="/" element={<Body />} />

@@ -1,8 +1,16 @@
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, auth } from "./firebaseIndex";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { addUser, removeUser } from "../utils/slice/userSlice";
 
 export const SignUpFirebase = async ({
   firstName,
@@ -56,6 +64,48 @@ export const signOutFirebase = async () => {
   } catch (error) {
     console.error(error.message);
   }
+};
+
+export const useAuthListener = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const userToken = Cookies.get("userToken");
+
+    // 🚀 Redirect logic
+    if (userToken && ["/", "/login", "/sign-up"].includes(location.pathname)) {
+      navigate("/home");
+    }
+
+    if (
+      !userToken &&
+      ["/home", "/docs", "/support", "/about"].includes(location.pathname)
+    ) {
+      navigate("/login");
+    }
+
+    const unSubscribe = onAuthStateChanged(auth, async (user) => {
+      try {
+        if (user) {
+          // Fetch user details from Firestore
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists()) {
+            const { firstName, lastName, email } = userDoc.data();
+            dispatch(addUser({ uid: user.uid, email, firstName, lastName }));
+          }
+        } else {
+          Cookies.remove("userToken"); // Ensure token is removed on logout
+          dispatch(removeUser());
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error.message);
+      }
+    });
+
+    return () => unSubscribe(); // Cleanup listener
+  }, [dispatch, navigate, location.pathname]);
 };
 
 export const getUserToken = async (user) => {
