@@ -35,7 +35,6 @@ const Login = () => {
 
       // Firebase login attempt
       const user = await signInFirebase({ email, password });
-      console.log("User signed in:", user);
 
       const token = await getUserToken(user);
       if (token) {
@@ -56,7 +55,6 @@ const Login = () => {
       navigate("/home");
     } catch (error) {
       setLoading(false); // Ensure loading resets on error
-      console.log("error", error);
       if (error.inner) {
         // Yup validation errors
         const formattedErrors = {};
