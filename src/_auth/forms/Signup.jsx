@@ -4,13 +4,16 @@ import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
-import LoginButton from "../../components/LoginButton";
+import LoginButton from "../../components/Loader";
 import { validationSchema } from "../../constants/validation";
 import { getUserToken, SignUpFirebase } from "../../firebase/authMethods";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/slice/userSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -41,6 +44,14 @@ const Signup = () => {
         localStorage.setItem("userToken", token);
         Cookies.set("userToken", token);
       }
+      // Dispatch only serializable data
+      const serializedUser = {
+        uid: user.uid,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      };
+      dispatch(addUser(serializedUser));
       navigate("/home");
     } catch (error) {
       //  Handle validation errors or Firebase errors
@@ -127,6 +138,9 @@ const Signup = () => {
           label="SIGN UP WITH EMAIL"
           loading={loading}
         />
+        {errors.form && (
+          <p className="text-red-500 text-sm mt-2">{errors.form}</p>
+        )}
       </form>
 
       <p className="text-lg text-gray-700 my-5">

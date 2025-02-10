@@ -8,25 +8,29 @@ import Login from "./_auth/forms/Login";
 import Signup from "./_auth/forms/Signup";
 import { Home, Support, About } from "./_root/pages/index";
 import Docs from "./_docs/Docs";
+import { Provider } from "react-redux";
+import appStore from "./utils/store/store";
 
 const App = () => {
   return (
-    <BrowserRouter basename="/">
-      <Navbar />
-      <Routes>
-        <Route index path="/" element={<Body />} />
-        <Route element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="sign-up" element={<Signup />} />
-        </Route>
-        <Route element={<RootLayout />}>
-          <Route path="home" element={<Home />} />
-          <Route path="docs" element={<Docs />} />
-          <Route path="support" element={<Support />} />
-          <Route path="about" element={<About />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={appStore}>
+      <BrowserRouter basename="/">
+        <Navbar />
+        <Routes>
+          <Route index path="/" element={<Body />} />
+          <Route element={<AuthLayout />}>
+            <Route path="login" element={<Login />} />
+            <Route path="sign-up" element={<Signup />} />
+          </Route>
+          <Route element={<RootLayout />}>
+            <Route path="home" element={<Home />} />
+            <Route path="docs" element={<Docs />} />
+            <Route path="support" element={<Support />} />
+            <Route path="about" element={<About />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

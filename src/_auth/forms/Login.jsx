@@ -4,37 +4,28 @@ import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
-import LoginButton from "../../components/LoginButton";
-
+import LoginButton from "../../components/Loader";
 import { getUserToken, signInFirebase } from "../../firebase/authMethods";
 import Cookies from "js-cookie";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseIndex";
 import { validationSchema } from "../../constants/validation";
+import Loader from "../../components/Loader";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({}); // ✅ Store validation errors
+  const [errors, setError] = useState({}); // ✅ Store validation errors
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrors({}); // Clear previous errors before new attempt
+    setError(""); // Reset error before new attempt
 
     try {
-      // ✅ Validate input using Yup (similar to Signup)
-      await validationSchema.validate(
-        { email, password },
-        { abortEarly: false }
-      );
-
-      // ✅ If validation passes, attempt Firebase login
       const user = await signInFirebase({ email, password });
-      console.log(user);
-
       const token = await getUserToken(user);
       if (token) {
         Cookies.set("userToken", token);
@@ -44,16 +35,7 @@ const Login = () => {
         }
       }
     } catch (error) {
-      // ✅ Handle validation errors
-      if (error.inner) {
-        const formattedErrors = {};
-        error.inner.forEach((err) => {
-          formattedErrors[err.path] = err.message;
-        });
-        setErrors(formattedErrors);
-      } else {
-        setErrors({ form: error.message }); // Handle Firebase errors
-      }
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -82,7 +64,6 @@ const Login = () => {
             <p className="text-red-500 text-sm">{errors.email}</p>
           )}
         </div>
-
         <div>
           <Input
             label="Password"
@@ -96,11 +77,18 @@ const Login = () => {
           )}
         </div>
 
-        <LoginButton
+        <button
           type="submit"
-          label={"SIGN UP WITH EMAIL"}
-          disabled={loading}
-        />
+          className="p-4 mt-10 bg-white w-full mb-10 font-semibold text-black border border-solid border-black rounded-sm hover:bg-accent hover:text-white flex items-center justify-center"
+        >
+          {loading ? (
+            <div className="flex items-center justify-center gap-2 w-full">
+              <Loader /> Loading...
+            </div>
+          ) : (
+            "SIGN IN WITH EMAIL"
+          )}
+        </button>
 
         {errors.form && (
           <p className="text-red-500 text-sm mt-2">{errors.form}</p>
