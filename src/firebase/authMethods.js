@@ -1,6 +1,9 @@
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -83,6 +86,7 @@ export const useAuthListener = () => {
       !userToken &&
       ["/home", "/docs", "/support", "/about"].includes(location.pathname)
     ) {
+      dispatch(removeUser());
       navigate("/login");
     }
 
@@ -92,12 +96,20 @@ export const useAuthListener = () => {
           // Fetch user details from Firestore
           const userDoc = await getDoc(doc(db, "users", user.uid));
           if (userDoc.exists()) {
-            const { firstName, lastName, email } = userDoc.data();
-            dispatch(addUser({ uid: user.uid, email, firstName, lastName }));
+            const { firstName, lastName, email, displayName } = userDoc.data();
+            dispatch(
+              addUser({
+                uid: user.uid,
+                email,
+                firstName,
+                lastName,
+                displayName,
+              })
+            );
           }
         } else {
           Cookies.remove("userToken"); // Ensure token is removed on logout
-          dispatch(removeUser());
+          // dispatch(removeUser());
         }
       } catch (error) {
         console.error("Error fetching user:", error.message);
@@ -106,6 +118,38 @@ export const useAuthListener = () => {
 
     return () => unSubscribe(); // Cleanup listener
   }, [dispatch, navigate, location.pathname]);
+};
+
+export const googleAuthentication = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential?.accessToken;
+    const user = result?.user;
+
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        // Create a new user document if it doesn't exist
+        await setDoc(userDocRef, {
+          email: user.email,
+          displayName: user.displayName,
+        });
+      }
+    } else {
+      Cookies.remove("userToken");
+    }
+
+    return { user, token };
+  } catch (error) {
+    console.error("Google authentication error:", error);
+    Cookies.remove("userToken");
+    throw new Error("Google authentication failed.");
+  }
 };
 
 export const getUserToken = async (user) => {

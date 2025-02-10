@@ -5,7 +5,11 @@ import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
 import { validationSchema } from "../../constants/validation";
-import { getUserToken, SignUpFirebase } from "../../firebase/authMethods";
+import {
+  getUserToken,
+  googleAuthentication,
+  SignUpFirebase,
+} from "../../firebase/authMethods";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/slice/userSlice";
@@ -54,18 +58,40 @@ const Signup = () => {
       dispatch(addUser(serializedUser));
       navigate("/home");
     } catch (error) {
-      //  Handle validation errors or Firebase errors
-      if (error.inner) {
-        const formattedErrors = {};
-        error.inner.forEach((err) => {
-          formattedErrors[err.path] = err.message;
-        });
-        setErrors(formattedErrors);
-      } else {
-        setErrors({ form: error.message });
-      }
+      //  Handle errors (validation & Firebase)
+      setErrors(
+        error.inner
+          ? error.inner.reduce(
+              (acc, err) => ({ ...acc, [err.path]: err.message }),
+              {}
+            )
+          : { form: error.message }
+      );
     } finally {
-      setLoading(false); // ✅ Reset loading state after success or failure
+      setLoading(false); //  Reset loading state after success or failure
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      const result = await googleAuthentication();
+      const { user, token } = result;
+
+      if (user && token) {
+        localStorage.setItem("userToken", token);
+        Cookies.set("userToken", token);
+        const strealizedUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+
+        dispatch(addUser(strealizedUser));
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
     }
   };
 
@@ -76,8 +102,14 @@ const Signup = () => {
         Get started with 5000 free API. Open Source
       </p>
       <div className="flex pt-10 space-x-20">
-        <GoogleButton name={"Sign up with Google"} />
-        <GitHubButton name={"Sign up with GitHub"} />
+        <GoogleButton
+          name={"Sign up with Google"}
+          onClick={handleGoogleSignup}
+        />
+        {/* <GitHubButton
+          name={"Sign up with GitHub"}
+          onClick={handleGitHubSignup}
+        /> */}
       </div>
       <Divider />
       <form className="w-4/5" onSubmit={handleSignup}>

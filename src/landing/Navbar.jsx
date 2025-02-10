@@ -54,8 +54,15 @@ const Navbar = () => {
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 h-10 flex items-center justify-center rounded-full font-bold bg-neutral text-white text-lg">
-                  {user?.firstName?.charAt(0)}
-                  {user?.lastName?.charAt(0)}
+                  {user?.firstName && user?.lastName
+                    ? `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`
+                    : user?.displayName
+                    ? user.displayName
+                        .split(" ") // Split into words
+                        .map((word) => word.charAt(0)) // Take the first letter of each word
+                        .join("") // Join them together
+                        .slice(0, 2) // Ensure only 2 characters
+                    : "NN"}
                 </div>
               </div>
               <ul

@@ -4,7 +4,11 @@ import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
-import { getUserToken, signInFirebase } from "../../firebase/authMethods";
+import {
+  getUserToken,
+  googleAuthentication,
+  signInFirebase,
+} from "../../firebase/authMethods";
 import Cookies from "js-cookie";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseIndex";
@@ -75,8 +79,14 @@ const Login = () => {
       <h1 className="text-2xl">Log in to your account</h1>
 
       <div className="flex pt-10 space-x-20">
-        <GoogleButton name={"Sign in with Google"} />
-        <GitHubButton name={"Sign in with GitHub"} />
+        <GoogleButton
+          name={"Sign in with Google"}
+          // onClick={handleGoogleSignIn}
+        />
+        {/* <GitHubButton
+          name={"Sign in with GitHub"}
+          onClick={handleGitHubSignIn}
+        /> */}
       </div>
       <Divider />
 
