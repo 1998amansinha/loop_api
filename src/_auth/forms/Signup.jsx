@@ -3,11 +3,14 @@ import GoogleButton from "../../components/GoogleButton";
 import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import LoginButton from "../../components/LoginButton";
-import { SignUpFirebase } from "../../firebase/authMethods";
+import { validationSchema } from "../../constants/validation";
+import { getUserToken, SignUpFirebase } from "../../firebase/authMethods";
+import Cookies from "js-cookie";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -15,35 +18,40 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // ✅ Yup validation schema with stronger password rules
-
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true); // Prevent multiple clicks
     try {
-      // ✅ Validate form input with Yup
+      // Validate form input with Yup
       await validationSchema.validate(
         { firstName, lastName, email, password },
         { abortEarly: false }
       );
-      setErrors({}); // ✅ Clear previous errors if validation passes
+      setErrors({}); // Clear previous errors if validation passes
 
-      setLoading(true); // ✅ Set loading only when validation passes
-
-      // ✅ Pass all required fields to SignUpFirebase
-      await SignUpFirebase({
+      // Create user with Firebase Authentication
+      const user = await SignUpFirebase({
         firstName,
         lastName,
         email,
         password,
-        setErrors,
       });
+      const token = await getUserToken(user);
+      if (token) {
+        localStorage.setItem("userToken", token);
+        Cookies.set("userToken", token);
+      }
+      navigate("/home");
     } catch (error) {
+      //  Handle validation errors or Firebase errors
       if (error.inner) {
         const formattedErrors = {};
         error.inner.forEach((err) => {
           formattedErrors[err.path] = err.message;
         });
         setErrors(formattedErrors);
+      } else {
+        throw new Error("Error saving user to Firestore: " + error.message);
       }
     } finally {
       setLoading(false); // ✅ Reset loading state after success or failure
@@ -103,9 +111,9 @@ const Signup = () => {
 
         <div>
           <Input
-            label={"Password"}
-            type={"password"}
-            placeholder={"Please enter your password"}
+            label="Password"
+            type="password"
+            placeholder="Please enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

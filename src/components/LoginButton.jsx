@@ -9,9 +9,9 @@ const LoginButton = ({ label, type, loading }) => {
     >
       {loading ? (
         <img
-          src="https://res.cloudinary.com/do5xzpecm/image/upload/v1739077967/tube-spinner_dggcko.svg"
+          src="https://res.cloudinary.com/do5xzpecm/image/upload/v1739096010/tube-spinner_1_qmtgmm.svg"
           alt="Loading..."
-          className="w-6 h-6"
+          className="w-8 h-8 "
         />
       ) : (
         label
