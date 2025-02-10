@@ -4,12 +4,12 @@ import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
-import LoginButton from "../../components/Loader";
 import { validationSchema } from "../../constants/validation";
 import { getUserToken, SignUpFirebase } from "../../firebase/authMethods";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/slice/userSlice";
+import Loader from "../../components/Loader";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -47,8 +47,8 @@ const Signup = () => {
       // Dispatch only serializable data
       const serializedUser = {
         uid: user.uid,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName,
+        lastName,
         email: user.email,
       };
       dispatch(addUser(serializedUser));
@@ -62,7 +62,7 @@ const Signup = () => {
         });
         setErrors(formattedErrors);
       } else {
-        throw new Error("Error saving user to Firestore: " + error.message);
+        setErrors({ form: error.message });
       }
     } finally {
       setLoading(false); // ✅ Reset loading state after success or failure
@@ -133,14 +133,21 @@ const Signup = () => {
           )}
         </div>
 
-        <LoginButton
-          type="submit"
-          label="SIGN UP WITH EMAIL"
-          loading={loading}
-        />
         {errors.form && (
           <p className="text-red-500 text-sm mt-2">{errors.form}</p>
         )}
+        <button
+          type="submit"
+          className="p-4 mt-10 bg-white w-full mb-10 font-semibold text-black border border-solid border-black rounded-sm hover:bg-accent hover:text-white flex items-center justify-center"
+        >
+          {loading ? (
+            <div className="flex items-center justify-center gap-2 w-full">
+              <Loader /> Loading...
+            </div>
+          ) : (
+            "SIGN UP WITH EMAIL"
+          )}
+        </button>
       </form>
 
       <p className="text-lg text-gray-700 my-5">

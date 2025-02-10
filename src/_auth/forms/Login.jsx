@@ -4,40 +4,71 @@ import GitHubButton from "../../components/GitHubButton";
 import Divider from "../../components/Divider";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
-import LoginButton from "../../components/Loader";
 import { getUserToken, signInFirebase } from "../../firebase/authMethods";
 import Cookies from "js-cookie";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseIndex";
-import { validationSchema } from "../../constants/validation";
+import { loginValidationSchema } from "../../constants/validation";
 import Loader from "../../components/Loader";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../utils/slice/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("1998amansinha@gmail.com");
+  const [password, setPassword] = useState("Niharika@80");
   const [errors, setError] = useState({}); // ✅ Store validation errors
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Reset error before new attempt
+    setError({}); // Reset errors before validation
 
     try {
+      // Validate input using Yup
+      await loginValidationSchema.validate(
+        { email, password },
+        { abortEarly: false }
+      );
+
+      // Firebase login attempt
       const user = await signInFirebase({ email, password });
+      console.log("User signed in:", user);
+
       const token = await getUserToken(user);
       if (token) {
+        localStorage.setItem("userToken", token);
         Cookies.set("userToken", token);
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          navigate("/home");
-        }
       }
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const { firstName, lastName } = userDoc.data();
+        const serializedUser = {
+          uid: user.uid,
+          firstName,
+          lastName,
+          email: user.email,
+        };
+        dispatch(addUser(serializedUser));
+      }
+      navigate("/home");
     } catch (error) {
-      setError(error.message);
+      setLoading(false); // Ensure loading resets on error
+      console.log("error", error);
+      if (error.inner) {
+        // Yup validation errors
+        const formattedErrors = {};
+        error.inner.forEach((err) => {
+          formattedErrors[err.path] = err.message;
+        });
+        setError(formattedErrors);
+      } else {
+        setError({ form: error.message });
+      }
     } finally {
-      setLoading(false);
+      setLoading(false); // Ensure loading resets after success/failure
     }
   };
 
@@ -77,6 +108,10 @@ const Login = () => {
           )}
         </div>
 
+        {errors.form && (
+          <p className="text-red-500 text-md font-bold mt-5">{errors.form}</p>
+        )}
+
         <button
           type="submit"
           className="p-4 mt-10 bg-white w-full mb-10 font-semibold text-black border border-solid border-black rounded-sm hover:bg-accent hover:text-white flex items-center justify-center"
@@ -89,10 +124,6 @@ const Login = () => {
             "SIGN IN WITH EMAIL"
           )}
         </button>
-
-        {errors.form && (
-          <p className="text-red-500 text-sm mt-2">{errors.form}</p>
-        )}
       </form>
 
       <p className="text-lg text-gray-700 my-5 text-opacity-60 ml-16">
