@@ -74,6 +74,31 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await googleAuthentication(dispatch);
+      const { user, token } = result;
+      console.log("InUser", user);
+      console.log("Intoken", token);
+
+      if (token) {
+        localStorage.setItem("userToken", token);
+        Cookies.set("userToken", token);
+        dispatch(
+          addUser({
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+          })
+        );
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error signing in with Google", error);
+    }
+  };
+
   return (
     <div className="my-10 ml-28 space-y-2">
       <h1 className="text-2xl">Log in to your account</h1>
@@ -81,7 +106,7 @@ const Login = () => {
       <div className="flex pt-10 space-x-20">
         <GoogleButton
           name={"Sign in with Google"}
-          // onClick={handleGoogleSignIn}
+          onClick={handleGoogleSignIn}
         />
         {/* <GitHubButton
           name={"Sign in with GitHub"}

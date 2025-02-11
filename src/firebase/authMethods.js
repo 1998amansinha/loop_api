@@ -7,7 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "./firebaseIndex";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
@@ -120,7 +120,7 @@ export const useAuthListener = () => {
   }, [dispatch, navigate, location.pathname]);
 };
 
-export const googleAuthentication = async () => {
+export const googleAuthentication = async (dispatch) => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
@@ -132,7 +132,6 @@ export const googleAuthentication = async () => {
     if (user) {
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
-
       if (!userDoc.exists()) {
         // Create a new user document if it doesn't exist
         await setDoc(userDocRef, {
@@ -140,8 +139,14 @@ export const googleAuthentication = async () => {
           displayName: user.displayName,
         });
       }
-    } else {
-      Cookies.remove("userToken");
+      if (userDoc.exists()) {
+        const serializedUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+        dispatch(addUser(serializedUser));
+      }
     }
 
     return { user, token };
