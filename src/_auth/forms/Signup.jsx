@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router";
 import { validationSchema } from "../../constants/validation";
 import {
   getUserToken,
+  gitHubAuthentication,
   googleAuthentication,
   SignUpFirebase,
 } from "../../firebase/authMethods";
@@ -95,6 +96,29 @@ const Signup = () => {
     }
   };
 
+  const handleGitHubSignup = async () => {
+    try {
+      const result = await gitHubAuthentication();
+      const { user, token } = result;
+
+      if (user && token) {
+        localStorage.setItem("userToken", token);
+        Cookies.set("userToken", token);
+        const strealizedUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+
+        dispatch(addUser(strealizedUser));
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+
   return (
     <div className="my-10 ml-28 space-y-2">
       <h1 className="text-2xl">Create an account</h1>
@@ -106,10 +130,10 @@ const Signup = () => {
           name={"Sign up with Google"}
           onClick={handleGoogleSignup}
         />
-        {/* <GitHubButton
+        <GitHubButton
           name={"Sign up with GitHub"}
           onClick={handleGitHubSignup}
-        /> */}
+        />
       </div>
       <Divider />
       <form className="w-4/5" onSubmit={handleSignup}>

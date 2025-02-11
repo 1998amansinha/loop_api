@@ -6,6 +6,7 @@ import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router";
 import {
   getUserToken,
+  gitHubAuthentication,
   googleAuthentication,
   signInFirebase,
 } from "../../firebase/authMethods";
@@ -78,6 +79,29 @@ const Login = () => {
     try {
       const result = await googleAuthentication(dispatch);
       const { user, token } = result;
+
+      if (token) {
+        localStorage.setItem("userToken", token);
+        Cookies.set("userToken", token);
+        dispatch(
+          addUser({
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+          })
+        );
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error signing in with Google", error);
+    }
+  };
+
+  const handleGitHubSignIn = async () => {
+    try {
+      const result = await gitHubAuthentication(dispatch);
+      const { user, token } = result;
       console.log("InUser", user);
       console.log("Intoken", token);
 
@@ -108,10 +132,10 @@ const Login = () => {
           name={"Sign in with Google"}
           onClick={handleGoogleSignIn}
         />
-        {/* <GitHubButton
+        <GitHubButton
           name={"Sign in with GitHub"}
           onClick={handleGitHubSignIn}
-        /> */}
+        />
       </div>
       <Divider />
 

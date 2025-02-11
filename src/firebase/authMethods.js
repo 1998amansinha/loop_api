@@ -156,6 +156,42 @@ export const googleAuthentication = async (dispatch) => {
     throw new Error("Google authentication failed.");
   }
 };
+export const gitHubAuthentication = async (dispatch) => {
+  try {
+    const provider = new GithubAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    const credential = GithubAuthProvider.credentialFromResult(result);
+    const token = credential?.accessToken;
+    const user = result?.user;
+
+    if (user) {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (!userDoc.exists()) {
+        // Create a new user document if it doesn't exist
+        await setDoc(userDocRef, {
+          email: user.email,
+          displayName: user.displayName,
+        });
+      }
+      if (userDoc.exists()) {
+        const serializedUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+        dispatch(addUser(serializedUser));
+      }
+    }
+
+    return { user, token };
+  } catch (error) {
+    console.error("Github authentication error:", error);
+    Cookies.remove("userToken");
+    throw new Error("Github authentication failed.");
+  }
+};
 
 export const getUserToken = async (user) => {
   try {
