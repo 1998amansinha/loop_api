@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router";
 import { signOutFirebase } from "../firebase/authMethods";
 import { removeUser } from "../utils/slice/userSlice";
 import Cookies from "js-cookie";
+import Alert from "../components/Alert";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -16,8 +18,10 @@ const Navbar = () => {
       localStorage.removeItem("userToken"); // Clear token
       Cookies.remove("userToken");
       dispatch(removeUser());
+      toast.success("Logout Successful");
       navigate("/login"); // Redirect to login after sign-out
     } catch (error) {
+      toast.error("Error signing out");
       console.error("Error signing out:", error.message);
     }
   };

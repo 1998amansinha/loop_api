@@ -17,6 +17,7 @@ import { loginValidationSchema } from "../../constants/validation";
 import Loader from "../../components/Loader";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/slice/userSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const Login = () => {
         };
         dispatch(addUser(serializedUser));
       }
+      toast.success("Login successfull!");
       navigate("/home");
     } catch (error) {
       setLoading(false); // Ensure loading resets on error
@@ -68,6 +70,7 @@ const Login = () => {
         });
         setError(formattedErrors);
       } else {
+        toast.error("Login failed. Please try again.");
         setError({ form: error.message });
       }
     } finally {
@@ -90,10 +93,11 @@ const Login = () => {
             email: user.email,
           })
         );
-
+        toast.success("Login successfull!");
         navigate("/home");
       }
     } catch (error) {
+      toast.error("Login failed. Please try again.");
       console.error("Error signing in with Google", error);
     }
   };
@@ -115,10 +119,11 @@ const Login = () => {
             email: user.email,
           })
         );
-
+        toast.success("Login successfull!");
         navigate("/home");
       }
     } catch (error) {
+      toast.error("Login failed. Please try again.");
       console.error("Error signing in with Google", error);
     }
   };

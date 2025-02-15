@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Navbar from "./landing/Navbar";
 import Body from "./Body";
 import AuthLayout from "./_auth/AuthLayout";
@@ -18,6 +12,8 @@ import { Provider } from "react-redux";
 import appStore from "./utils/store/store";
 import Cookies from "js-cookie";
 import { useAuthListener } from "./firebase/authMethods";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthRedirect = () => {
   useAuthListener();
@@ -26,6 +22,7 @@ const AuthRedirect = () => {
 const App = () => {
   return (
     <Provider store={appStore}>
+      <ToastContainer position="top-right" autoClose={1500} />
       <BrowserRouter basename="/">
         <AuthRedirect /> {/* 🚀 Redirection Logic Runs Globally */}
         <Navbar />

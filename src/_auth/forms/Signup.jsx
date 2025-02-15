@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/slice/userSlice";
 import Loader from "../../components/Loader";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -57,8 +58,10 @@ const Signup = () => {
         email: user.email,
       };
       dispatch(addUser(serializedUser));
+      toast.success("Login successfull!");
       navigate("/home");
     } catch (error) {
+      toast.error("Login failed. Please try again.");
       //  Handle errors (validation & Firebase)
       setErrors(
         error.inner
@@ -88,10 +91,11 @@ const Signup = () => {
         };
 
         dispatch(addUser(strealizedUser));
-
+        toast.success("Login successfull!");
         navigate("/home");
       }
     } catch (error) {
+      toast.error("Login failed. Please try again.");
       console.error("Signup failed:", error);
     }
   };
@@ -111,10 +115,11 @@ const Signup = () => {
         };
 
         dispatch(addUser(strealizedUser));
-
+        toast.success("Login successfull!");
         navigate("/home");
       }
     } catch (error) {
+      toast.error("Login failed. Please try again.");
       console.error("Signup failed:", error);
     }
   };
