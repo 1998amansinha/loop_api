@@ -7,11 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
+
+# Environment variables
 *.local
 .env*
+
+# API Data (Prevent API JSON files from being committed)
+API data/
+*.json
 
 # Editor directories and files
 .vscode/*
