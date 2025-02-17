@@ -33,6 +33,22 @@ export default {
         cardTitle: "#072757",
         cardPara: "#3b5377",
       },
+      animation: {
+        rainbowBorder: "rainbowGlow 5s ease-in-out infinite",
+        fadeIn: "fadeIn 2s ease-in-out",
+      },
+      keyframes: {
+        rainbowGlow: {
+          "0%": { borderColor: "#ff0000" }, // Red
+          "60%": { borderColor: "#00ff00" }, // Green
+          "80%": { borderColor: "#0000ff" }, // Blue
+          "100%": { borderColor: "#ff0000" }, // Back to Red
+        },
+        fadeIn: {
+          "0%": { opacity: 0, transform: "translateY(-10px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+      },
     },
   },
   daisyui: {
@@ -52,5 +68,5 @@ export default {
       },
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("tailwind-scrollbar-hide")], // ✅ Add scrollbar-hide plugin
 };

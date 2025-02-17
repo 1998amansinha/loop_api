@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router";
 import { signOutFirebase } from "../firebase/authMethods";
 import { removeUser } from "../utils/slice/userSlice";
 import Cookies from "js-cookie";
-import Alert from "../components/Alert";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
@@ -28,22 +27,22 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="navbar bg-base-100">
+      <div className="navbar bg-base-100 fixed top-0 left-0 w-full z-50 ">
         <div className="navbar-start">
           <Link to="/" className="btn btn-ghost text-xl ml-10">
-            loop Api
+            LoopAPI
           </Link>
         </div>
 
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li className="font-bold text-base">
+            <li className="font-semibold text-base">
               <Link to="/docs">Docs</Link>
             </li>
-            <li className="font-bold text-base">
+            <li className="font-semibold text-base">
               <Link to="/support">Support</Link>
             </li>
-            <li className="font-bold text-base">
+            <li className="font-semibold text-base">
               <Link to="/about">About</Link>
             </li>
           </ul>
@@ -99,6 +98,9 @@ const Navbar = () => {
           )}
         </div>
       </div>
+
+      {/* Spacing to prevent content from being hidden under the fixed navbar */}
+      <div className="h-16"></div>
     </div>
   );
 };
