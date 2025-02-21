@@ -18,9 +18,9 @@ const Home = () => {
         <WelcomeHeader />
 
         {/* Search Bar - Centered Below Header */}
-        <div className="w-full flex justify-center my-6">
+        {/* <div className="w-full flex justify-center my-6">
           <SearchBar />
-        </div>
+        </div> */}
 
         {/* Bottom Section - Popular API Cards */}
         <div className="my-20">

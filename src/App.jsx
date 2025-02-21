@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Navbar from "./landing/Navbar";
 import Body from "./Body";
@@ -10,10 +10,10 @@ import { Home, Support, About } from "./_root/pages/index";
 import Docs from "./_docs/Docs";
 import { Provider } from "react-redux";
 import appStore from "./utils/store/store";
-import Cookies from "js-cookie";
 import { useAuthListener } from "./firebase/authMethods";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CategoryPage from "./_root/pages/CategoryPage";
 
 const AuthRedirect = () => {
   useAuthListener();
@@ -34,6 +34,7 @@ const App = () => {
           </Route>
           <Route element={<RootLayout />}>
             <Route path="home" element={<Home />} />
+            <Route path="category/:id" element={<CategoryPage />} />
             <Route path="docs" element={<Docs />} />
             <Route path="support" element={<Support />} />
             <Route path="about" element={<About />} />

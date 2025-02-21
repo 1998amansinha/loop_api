@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const LeftSideBar = () => {
   const [categories, setCategories] = useState([]);
@@ -33,12 +34,17 @@ const LeftSideBar = () => {
           categories.map((category, index) => (
             <li
               key={index}
-              className="py-2 px-4 cursor-pointer font-semibold  text-gray-400
-                   hover:text-gray-900 rounded-md text-sm font-segoe 
-                   transition-all duration-300 ease-in-out 
-                   transform-gpu hover:scale-105 hover:bg-gray-100 "
+              className="py-2 px-4 cursor-pointer font-semibold text-gray-400 
+             hover:text-gray-900 rounded-md text-sm font-segoe 
+             transition-all duration-300 ease-in-out transform-gpu 
+             hover:scale-105 hover:bg-gray-100"
             >
-              {category}
+              <Link
+                to={`/category/${category}`}
+                className="w-full h-full block"
+              >
+                {category}
+              </Link>
             </li>
           ))
         ) : (

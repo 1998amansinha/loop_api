@@ -106,8 +106,6 @@ const Login = () => {
     try {
       const result = await gitHubAuthentication(dispatch);
       const { user, token } = result;
-      console.log("InUser", user);
-      console.log("Intoken", token);
 
       if (token) {
         localStorage.setItem("userToken", token);

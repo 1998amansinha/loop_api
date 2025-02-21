@@ -31,7 +31,6 @@ fs.readdir(directoryPath, async (err, files) => {
 
       // ✅ Skip CategoryCard.json as it does not contain resources
       if (fileName === "CategoryCard") {
-        console.log(`⚠️ Skipping ${fileName}.json - No resources needed.`);
         continue;
       }
 
@@ -49,7 +48,6 @@ fs.readdir(directoryPath, async (err, files) => {
       });
 
       await Promise.all(uploadPromises);
-      console.log(`✅ All documents written for collection: ${fileName}`);
     } catch (error) {
       console.error(`🚨 Error processing file ${fileName}:`, error);
     }
