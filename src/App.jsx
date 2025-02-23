@@ -14,6 +14,8 @@ import { useAuthListener } from "./firebase/authMethods";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CategoryPage from "./_root/pages/CategoryPage";
+import Fetch from "./_docs/Fetch";
+import Promise from "./_docs/Promise";
 
 const AuthRedirect = () => {
   useAuthListener();
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="home" element={<Home />} />
             <Route path="category/:id" element={<CategoryPage />} />
             <Route path="docs" element={<Docs />} />
+            <Route path="fetch" element={<Fetch />} />
+            <Route path="promise" element={<Promise />} />
             <Route path="support" element={<Support />} />
             <Route path="about" element={<About />} />
           </Route>

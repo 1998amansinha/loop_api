@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const TopCategories = () => {
   const [topCategories, setTopCategories] = useState([]);
@@ -65,9 +66,11 @@ const TopCategories = () => {
 
             {/* Button */}
             <div className="my-5 flex justify-end">
-              <button className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-900 cursor-pointer transition">
-                Explore Now
-              </button>
+              <Link to={`/category/${category.name}`}>
+                <button className="bg-blue-600 text-white mr-5 px-4 py-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-900 transition">
+                  Explore Now
+                </button>
+              </Link>
             </div>
           </div>
         </motion.div>

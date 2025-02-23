@@ -51,7 +51,7 @@ const CategoryPage = () => {
   }, [id]);
 
   return (
-    <div className="flex bg-black min-h-screen text-white">
+    <div className="flex bg-black min-h-screen text-base-100 py-10">
       {/* Left Sidebar */}
       <div className="w-64 h-screen fixed left-0 top-20 overflow-y-auto scrollbar-hide bg-black">
         <LeftSideBar />
@@ -76,13 +76,14 @@ const CategoryPage = () => {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                  className="bg-gray-900 rounded-lg shadow-lg overflow-hidden transition duration-300 group hover:bg-gray-800 cursor-pointer h-[320px] flex flex-col justify-between"
+                  className="bg-gray-900 rounded-lg shadow-lg overflow-hidden transition duration-300 group hover:bg-gray-800 cursor-pointer h-[350px] flex flex-col justify-between"
                 >
                   {/* Card Content */}
-                  <div className="py-7 px-4 text-neutral flex-grow">
+                  <div className="py-6 px-4 text-neutral flex-grow">
                     <h2 className="text-3xl text-base-100 font-semibold transition">
                       {category.name}
                     </h2>
+                    <p className="text-gray-400 pt-2 pb-4 text-sm">{id}</p>
                     <p className="text-gray-400 text-lg mt-2 line-clamp-3">
                       {category.description}
                     </p>
