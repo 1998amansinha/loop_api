@@ -38,7 +38,6 @@ const TopCategories = () => {
 
     fetchTopCategories();
   }, []);
-  console.log(topCategories);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-12">

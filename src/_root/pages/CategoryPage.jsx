@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { motion } from "framer-motion";
 import LeftSideBar from "../../components/LeftSideBar";
-import WelcomeHeader from "../../components/WelcomeHeader";
+import { WelcomeHeader } from "../../components/WelcomeHeader";
 
 const CategoryPage = () => {
   const { id } = useParams();

@@ -1,8 +1,7 @@
 import LeftSideBar from "../../components/LeftSideBar";
-import SearchBar from "../../components/SearchBar";
 import TopCategories from "../../components/TopCategories";
 import Recomended from "../../components/Recomended";
-import WelcomeHeader from "../../components/WelcomeHeader";
+import { WelcomeHeader } from "../../components/WelcomeHeader";
 
 const Home = () => {
   return (
@@ -16,11 +15,6 @@ const Home = () => {
       <div className="ml-64 w-full p-6  bg-black">
         {/* Top Section - Welcome Header */}
         <WelcomeHeader />
-
-        {/* Search Bar - Centered Below Header */}
-        {/* <div className="w-full flex justify-center my-6">
-          <SearchBar />
-        </div> */}
 
         {/* Bottom Section - Popular API Cards */}
         <div className="my-20">

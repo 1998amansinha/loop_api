@@ -1,19 +1,43 @@
+"use client";
 import React from "react";
+import { HoverBorderGradient } from "../components/ui/hover-border-gradient";
 
-const WelcomeHeader = () => {
+export function WelcomeHeader() {
   return (
-    <div className="relative p-[3px] rounded-lg overflow-hidden my-10 ">
-      {/* <div className="absolute inset-0 border-[3px] rounded-lg animate-rainbowBorder"></div> */}
-      <div className="h-full px-20 py-4 w-full bg-gray-900 rounded-lg flex flex-col justify-center items-center relative z-10">
-        <h1 className="text-3xl font-bold text-base-100 animate-fadeIn">
-          👋 Welcome to <span className="text-blue-600">LoopAPI</span>!
-        </h1>
-        <p className="text-gray-400 mt-2 text-lg">
-          Explore a vast collection of free APIs, categorized for easy access.
-        </p>
-      </div>
+    <div className="m-40 flex justify-center text-center">
+      <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      >
+        <div className="flex flex-col px-5">
+          <span className="text-7xl pt-5">Welcome to Loop API</span>
+          <span className="pb-5 text-xl pt-3">
+            Explore a vast collection of free APIs, categorized for easy access.
+          </span>
+        </div>
+      </HoverBorderGradient>
     </div>
   );
-};
+}
 
-export default WelcomeHeader;
+const AceternityLogo = () => {
+  return (
+    <svg
+      width="66"
+      height="65"
+      viewBox="0 0 66 65"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-3 w-3 text-black dark:text-white"
+    >
+      <path
+        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+        stroke="currentColor"
+        strokeWidth="15"
+        strokeMiterlimit="3.86874"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};

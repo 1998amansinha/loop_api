@@ -1,70 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router";
+"use client";
+import { motion } from "framer-motion";
+import { HeroHighlight, Highlight } from "../components/ui/hero-highlight";
 
-const Hero = () => {
-  const fullText = "Loop API";
-  const [displayedText, setDisplayedText] = useState("");
-  const [letterIndex, setLetterIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timeout;
-
-    if (!isDeleting && letterIndex < fullText.length) {
-      // Typing Effect
-      timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + fullText[letterIndex]);
-        setLetterIndex(letterIndex + 1);
-      }, 300); // Adjust typing speed
-    } else if (!isDeleting && letterIndex === fullText.length) {
-      // Wait before deleting
-      timeout = setTimeout(() => setIsDeleting(true), 1500);
-    } else if (isDeleting && letterIndex > 0) {
-      // Deleting Effect
-      timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev.slice(0, -1));
-        setLetterIndex(letterIndex - 1);
-      }, 150); // Faster deleting speed
-    } else if (isDeleting && letterIndex === 0) {
-      // Restart Animation
-      setIsDeleting(false);
-      setDisplayedText("");
-      setLetterIndex(0);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [letterIndex, isDeleting]);
-
+export function Hero() {
   return (
-    <div className="hero min-h-screen relative">
-      <img
-        src="https://res.cloudinary.com/do5xzpecm/image/upload/b_black/e_vignette:100/ph7l3upr5us2dj9ojxpb"
-        className="absolute inset-0 w-full h-full object-cover brightness-90 "
-        alt="Background"
-      />
-
-      <div className="hero-content text-neutral-content text-center relative z-10 max-w-4xl">
-        <div>
-          <h1 className="text-6xl md:text-7xl font-extrabold text-base-100 transition-opacity duration-1000">
-            The Open-Source API Marketplace{" "}
-            <span className="text-accent font-bold">{displayedText}</span>
-            <span className="text-white animate-blink">|</span>{" "}
-            {/* Blinking Cursor */}
-          </h1>
-          <p className="mt-6 text-lg md:text-2xl text-base-100">
-            Loop API is an open-source platform where developers can publish,
-            discover, and use APIs for free. A collaborative space for API
-            creators and consumers, making API integration effortless.
-          </p>
-          <Link to="/login">
-            <button className="bg-neutral mt-10 text-base-100 px-14 py-3 rounded-lg font-semibold text-lg hover:bg-gray-700 transition-all shadow-md hover:scale-105">
-              Get Started
-            </button>
-          </Link>
-        </div>
-      </div>
-    </div>
+    <HeroHighlight>
+      <motion.h1
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={{
+          opacity: 1,
+          y: [20, -5, 0],
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.4, 0.0, 0.2, 1],
+        }}
+        className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+      >
+        Discover and explore{" "}
+        <Highlight className="text-black dark:text-white">LoopAPI</Highlight>,
+        the ultimate hub for free APIs across various categories.
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        className="text-base px-6 md:text-lg text-neutral-600 dark:text-neutral-300 max-w-3xl text-center mx-auto mt-4"
+      >
+        Search, rate, and contribute to a growing collection of APIs. Whether
+        you're building a new project or looking for inspiration, LoopAPI is
+        your go-to resource for free and open APIs.
+      </motion.p>
+    </HeroHighlight>
   );
-};
-
-export default Hero;
+}

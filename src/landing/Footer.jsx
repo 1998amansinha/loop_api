@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-neutral text-base-100 py-16">
+    <footer className="bg-gradient-to-r from-neutral to-slate-500 rounded-t-2xl text-base-100 py-16">
       <div className="container mx-auto flex flex-col items-center text-center">
         {/* Top Section: Branding */}
         <div className="mb-12">
@@ -74,12 +74,7 @@ const Footer = () => {
             >
               API Docs
             </Link>
-            <Link
-              to="/forum"
-              className="text-gray-300 hover:text-blue-400 transition-all duration-300 font-normal"
-            >
-              Developer Forum
-            </Link>
+
             <Link
               to="/blog"
               className="text-gray-300 hover:text-blue-400 transition-all duration-300 font-normal"
@@ -92,14 +87,14 @@ const Footer = () => {
           <div className="flex flex-col items-center">
             <h6 className="font-semibold text-xl text-white mb-3">Connect</h6>
             <div className="flex space-x-6">
-              <a
-                href="https://github.com/LoopAPI"
+              <Link
+                to="https:/github.com/1998amansinha/loop_api"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:scale-110 hover:text-blue-400 transition-all duration-300"
               >
                 <FaGithub size={28} />
-              </a>
+              </Link>
               <a
                 href="https://linkedin.com/company/loop-api"
                 target="_blank"
@@ -108,14 +103,13 @@ const Footer = () => {
               >
                 <FaLinkedin size={28} />
               </a>
-              <a
-                href="https://x.com/LoopAPI"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:scale-110 hover:text-blue-400 transition-all duration-300"
+
+              <Link
+                to="https:/github.com/1998amansinha/loop_api"
+                className="hover:scale-110 hover:text-blue-400 transition-allduration-300"
               >
                 <FaXTwitter size={28} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -82,10 +82,7 @@ export const useAuthListener = () => {
       navigate("/home");
     }
 
-    if (
-      !userToken &&
-      ["/home", "/docs", "/support", "/about"].includes(location.pathname)
-    ) {
+    if (!userToken && ["/home", "/docs"].includes(location.pathname)) {
       dispatch(removeUser());
       navigate("/login");
     }
