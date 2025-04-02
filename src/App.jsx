@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Provider store={appStore}>
       <ToastContainer position="top-right" autoClose={1500} />
-      <BrowserRouter basename="/">
+      <HashRouter basename="/">
         <AuthRedirect /> {/* 🚀 Redirection Logic Runs Globally */}
         <Navbar />
         <Routes>
@@ -44,7 +44,7 @@ const App = () => {
             <Route path="about" element={<About />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   );
 };
