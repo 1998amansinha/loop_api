@@ -37,7 +37,7 @@ const About = () => {
         {/* Right - Image Section */}
         <div className="flex-1 lg:w-1/3">
           <img
-            src="https://res.cloudinary.com/do5xzpecm/image/upload/v1740744236/About1_in6s51.jpg"
+            src="https://res.cloudinary.com/do5xzpecm/image/upload/v1740815590/Screenshot_2025-03-01_131002_zfz8nw.png"
             alt="LoopAPI About"
             className="w-4/5 ml-28 mt-10 rounded-2xl"
           />

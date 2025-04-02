@@ -32,7 +32,7 @@ const DocsSection = () => {
         {/* Right Section - Image */}
         <div className="md:w-2/3 flex justify-end">
           <img
-            src="https://res.cloudinary.com/do5xzpecm/image/upload/v1738641345/Screenshot_2025-02-04_091348_olrasx.png"
+            src="https://res.cloudinary.com/do5xzpecm/image/upload/v1743389764/Screenshot_2025-03-31_082519_ogwwju.png"
             alt="API Docs Preview"
             className="rounded-lg shadow-lg max-w-[50rem] hover:scale-105 transition-all"
           />

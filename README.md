@@ -1,8 +1,6 @@
-Here’s your **improved and more detailed** **README.md** for **LoopAPI** with extended explanations while keeping it clear and professional. 🚀
-
----
-
 # 📌 **LoopAPI - A Curated Collection of Free APIs**
+
+![LoopAPI Banner](https://res.cloudinary.com/do5xzpecm/image/upload/v1740815590/Screenshot_2025-03-01_131002_zfz8nw.png)
 
 LoopAPI is an open-source platform that provides a **curated collection of free APIs** across multiple categories. Whether you are a **developer, student, or enthusiast**, LoopAPI helps you discover, explore, and integrate APIs seamlessly into your projects.
 
@@ -94,8 +92,7 @@ LoopAPI is an open-source platform that provides a **curated collection of free 
 ### 🏠 **Home Page**
 
 - **Left Sidebar Navigation** → Always visible for easy category selection
-- **Top Section** → Search bar for quick API lookup
-- **Middle Section** → Random APIs (changes periodically)
+- **Top Section** → Random APIs (changes periodically)
 - **Bottom Section** → Popular APIs based on user ratings
 
 ### 📖 **Documentation Section**
