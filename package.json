@@ -1,5 +1,6 @@
 {
   "name": "loop_api",
+  "homepage": "https://1998amansinha.github.io/loop_api/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "22": "^0.0.0",
@@ -22,6 +25,7 @@
     "firebase-admin": "^13.1.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.3",
+    "gh-pages": "^6.3.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.475.0",
     "mini-svg-data-uri": "^1.4.4",
