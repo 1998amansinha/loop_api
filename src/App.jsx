@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router";
 import Navbar from "./landing/Navbar";
 import Body from "./Body";
 import AuthLayout from "./_auth/AuthLayout";

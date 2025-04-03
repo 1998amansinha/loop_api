@@ -7,7 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, auth } from "./firebaseIndex";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/slice/userSlice";
 
+//  Function to register a new user using Firebase Authentication
 export const SignUpFirebase = async ({
   firstName,
   lastName,
@@ -22,7 +23,7 @@ export const SignUpFirebase = async ({
   password,
 }) => {
   try {
-    //  Create user with Firebase Authentication
+    // Create a new user in Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -31,7 +32,7 @@ export const SignUpFirebase = async ({
     const user = userCredential.user;
 
     if (user) {
-      //  Store user info in Firestore
+      // Store user details in Firestore
       await setDoc(doc(db, "users", user.uid), {
         firstName,
         lastName,
@@ -41,34 +42,38 @@ export const SignUpFirebase = async ({
     }
     return user;
   } catch (error) {
-    //  Handle Firebase errors
+    // Handle signup errors
     console.error("Signup error:", error.message);
-    throw new Error("Signup error : ", error.message);
+    throw new Error("Signup error: " + error.message);
   }
 };
 
+//  Function to log in a user with email and password
 export const signInFirebase = async ({ email, password }) => {
   try {
+    // Sign in the user using Firebase Authentication
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
-    const user = userCredential.user;
-    return user;
+    return userCredential.user;
   } catch (error) {
     throw error;
   }
 };
 
+//  Function to log out the user
 export const signOutFirebase = async () => {
   try {
-    await signOut(auth);
+    await signOut(auth); // Firebase sign-out function
+    Cookies.remove("userToken"); // Remove authentication token from cookies
   } catch (error) {
-    console.error(error.message);
+    console.error("Sign out error:", error.message);
   }
 };
 
+//  Custom hook to listen for authentication changes
 export const useAuthListener = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,16 +82,16 @@ export const useAuthListener = () => {
   useEffect(() => {
     const userToken = Cookies.get("userToken");
 
-    // 🚀 Redirect logic
+    // Redirect logic based on authentication status
     if (userToken && ["/", "/login", "/sign-up"].includes(location.pathname)) {
       navigate("/home");
     }
-
     if (!userToken && ["/home", "/docs"].includes(location.pathname)) {
       dispatch(removeUser());
       navigate("/login");
     }
 
+    // Firebase authentication state listener
     const unSubscribe = onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
@@ -105,18 +110,19 @@ export const useAuthListener = () => {
             );
           }
         } else {
-          Cookies.remove("userToken"); // Ensure token is removed on logout
-          // dispatch(removeUser());
+          // Ensure the token is removed on logout
+          Cookies.remove("userToken");
         }
       } catch (error) {
         console.error("Error fetching user:", error.message);
       }
     });
 
-    return () => unSubscribe(); // Cleanup listener
+    return () => unSubscribe(); // Cleanup authentication listener
   }, [dispatch, navigate, location.pathname]);
 };
 
+//  Function to handle Google authentication
 export const googleAuthentication = async (dispatch) => {
   try {
     const provider = new GoogleAuthProvider();
@@ -129,30 +135,34 @@ export const googleAuthentication = async (dispatch) => {
     if (user) {
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
+
+      // Store user data in Firestore if it doesn't already exist
       if (!userDoc.exists()) {
-        // Create a new user document if it doesn't exist
         await setDoc(userDocRef, {
           email: user.email,
           displayName: user.displayName,
         });
       }
-      if (userDoc.exists()) {
-        const serializedUser = {
+
+      // Dispatch user data to Redux store
+      dispatch(
+        addUser({
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
-        };
-        dispatch(addUser(serializedUser));
-      }
+        })
+      );
     }
 
     return { user, token };
   } catch (error) {
     console.error("Google authentication error:", error);
-    Cookies.remove("userToken");
+    Cookies.remove("userToken"); // Ensure token is removed on failure
     throw new Error("Google authentication failed.");
   }
 };
+
+//  Function to handle GitHub authentication
 export const gitHubAuthentication = async (dispatch) => {
   try {
     const provider = new GithubAuthProvider();
@@ -165,39 +175,45 @@ export const gitHubAuthentication = async (dispatch) => {
     if (user) {
       const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
+
+      // Store user data in Firestore if it doesn't already exist
       if (!userDoc.exists()) {
-        // Create a new user document if it doesn't exist
         await setDoc(userDocRef, {
           email: user.email,
           displayName: user.displayName,
         });
       }
-      if (userDoc.exists()) {
-        const serializedUser = {
+
+      // Dispatch user data to Redux store
+      dispatch(
+        addUser({
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
-        };
-        dispatch(addUser(serializedUser));
-      }
+        })
+      );
     }
 
     return { user, token };
   } catch (error) {
-    console.error("Github authentication error:", error);
-    Cookies.remove("userToken");
-    throw new Error("Github authentication failed.");
+    console.error("GitHub authentication error:", error);
+    Cookies.remove("userToken"); // Ensure token is removed on failure
+    throw new Error("GitHub authentication failed.");
   }
 };
 
+//  Function to retrieve the user's authentication token and store it in cookies
 export const getUserToken = async (user) => {
   try {
     const token = await user.getIdToken();
+
+    // Store the token in cookies with secure options
     Cookies.set("userToken", token, {
-      expires: 7,
+      expires: 7, // Token expires in 7 days
       secure: true,
       sameSite: "strict",
     });
+
     return token;
   } catch (error) {
     throw new Error(error.message);

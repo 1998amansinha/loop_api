@@ -22,8 +22,8 @@ import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("1998amansinha@gmail.com");
-  const [password, setPassword] = useState("Niharika@80");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setError] = useState({}); // ✅ Store validation errors
   const [loading, setLoading] = useState(false);
 
