@@ -10,7 +10,7 @@ LoopAPI is an open-source platform that provides a **curated collection of free 
 - LoopAPI solves this by maintaining an **up-to-date, organized, and user-friendly** API directory.
 - APIs are categorized for easy navigation, and **detailed documentation** is available for each.
 
-🔗 **[Live Demo](https://loopapi.com/)** _(Replace with actual link)_
+🔗 **[Live Demo](https://1998amansinha.github.io/loop_api/)**
 
 ---
 
